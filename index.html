@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Unified search</title>
+    <link href='http://fonts.googleapis.com/css?family=Roboto:100' rel='stylesheet' type='text/css'>
+    <style>
+      html, body {
+        width: 100%;
+        height: 100%;
+      }
+      body {
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: space-between;
+        overflow: hidden;
+        font-family: 'Roboto', sans-serif;
+        text-align: center;
+        color: #555;
+      }
+      body > * {
+        transition: all ease 0.5s;
+      }
+      input {
+        font-size: 18px;
+        padding: 8px;
+        width: 320px;
+        font-family: 'Roboto', sans-serif;
+        font-weight: bolder;
+        color: black;
+        margin: 10px;
+      }
+      #tip {
+        overflow: hidden;
+        height: 60px;
+      }
+      #tip.full {
+        height: 320px;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <h1>Unified Search</h1>
+      <h2>Search all your conversations from one same place</h2>
+    </div>
+    <form>
+      &#128269;
+      <input autofocus placeholder="Type a keyword here then press enter" type="text" id="query"/>
+      <p>This will open tabs for: Facebook Messenger, Twitter, and Gmail.</p>
+      <p>No authentication needed! :-)</p>
+    </form>
+    <div id="tip">
+      <h3>Tip: don't forget to allow popups from this page!<h2>
+      <img width="339px" src="instructions.png">
+    </div>
+    <script>
+    var TWITTER_USERNAME = 'adrienjoly';
+    document.getElementsByTagName('form')[0].onsubmit = function(evt) {
+      evt.preventDefault();
+      document.getElementById('tip').classList.add('full');
+      var query = document.getElementById('query').value;
+      var q = encodeURIComponent(query);
+      var i = 0;
+      setTimeout(function(){
+        [
+          //'https://facebook.com/messages/search?action=search-snippet&query=blockchain&mquery=',
+          'https://m.facebook.com/messages/?pagination_direction=1&sbt=1&q=',
+          'https://twitter.com/search?f=tweets&src=typd&q=%40' + TWITTER_USERNAME + '%20',
+          'https://mail.google.com/mail/#search/',
+          //'https://drive.google.com/drive/search?q=',
+          //'https://keep.google.com/#search/text%3D',
+          //'https://www.diigo.com/search?what=',
+        ].map(function(url){
+          window.open(url + q, '_blank');
+        });
+      }, 200);
+    };
+    </script>
+  </body>
+</html>
